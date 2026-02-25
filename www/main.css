@@ -4,5 +4,32 @@ html, body {
 	margin: 0;
 	padding: 0;
 	border: 0;
+	background-color: grey;
+	font-family: arial;
 }
 
+.center {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;	
+}
+
+.card {
+	width: 20em;
+	height: 50em;
+	border: 0.15em solid black;
+	border-radius: 10px;
+	align-self: center;
+}

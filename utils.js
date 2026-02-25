@@ -1,7 +1,3 @@
-let fs          = require('fs')
-let crypto = require('crypto')
-let path     = require('path')
-
 pr = console.error
 
 file_exists = function(path) {
