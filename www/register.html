@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="main.css">
+	<meta charset="UTF-8">
+	<title>MoviePirate</title>
+</head>
+<body class="center s column">
+	<form class="center fill column" action="/register" method="post">
+		<h1 style="margin-bottom: 2em;">What is your name?</h1>
+		<input 
+			type="text"
+			name="username"
+			required
+			minlength="2"
+			maxlength="32"
+			pattern="[A-Za-z0-9]+"
+			title="2-32 characters. Only numbers and letters are allowed."
+			placeholder="Name: "
+		/>
+		<button class="button" style="margin-top: 10em;">Create account</button>
+	</form>
+</body>
+</html>

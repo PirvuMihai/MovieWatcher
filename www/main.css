@@ -1,11 +1,41 @@
+/*
+	HTML tag overwrite
+*/
+
+
 html, body {
 	width: 100vw;
 	height: 100vh;
 	margin: 0;
 	padding: 0;
 	border: 0;
-	background-color: grey;
+	color: lightgrey;
+	background-color: #120c1d;
 	font-family: arial;
+}
+
+input[type="text"] {
+	width: 25em;
+	height: 3em;
+	border: 0.15em solid lightgrey;
+	border-radius: 1em;
+	background-color: #120c1d;
+	padding-left: 1em;
+	color: lightgrey;
+}
+
+/*
+	Main reusable classes
+*/
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+.column {
+	display: flex;
+	flex-direction: column;
 }
 
 .center {
@@ -14,22 +44,43 @@ html, body {
 	align-items: center;
 }
 
-.column {
+.s {
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
+	align-items: stretch;
 }
 
-.row {
-	display: flex;
-	flex-direction: row;
-	justify-content: center;	
+.fill {
+	flex: 1;
+}
+
+/* 
+	Specific classes for reusable elements
+*/
+
+.button {
+	text-decoration: none;
+	color: lightgrey;
+	width: 15em;
+	height: 3em;
+	border: 0.15em solid lightgrey;
+	background-color: #120c1d;
+	border-radius: 1em;
+	align-content: center;
+	text-align: center;
 }
 
 .card {
 	width: 20em;
 	height: 50em;
-	border: 0.15em solid black;
+	border: 1em solid black;
 	border-radius: 10px;
 	align-self: center;
+}
+
+/*
+	Overwrite certain properties for some elements
+*/
+
+#homepage_container {
+	margin: 2em;
 }

@@ -1,4 +1,5 @@
-pr = console.error
+pr    = console.error
+parse = JSON.parse
 
 file_exists = function(path) {
 	return fs.existsSync(path)
@@ -14,5 +15,17 @@ read_file = function(path) {
 
 mkdir = function(path) {
 	if (!fs.existsSync(path))
-		fs.mkdir(path, {recursive: true})
+		fs.mkdir(path, {recursive: true}, (e) => {
+			if (e)
+				pr(e)
+		})
+}
+
+hot_require = function(path) {
+	if (fs.existsSync(path))
+		eval(read_file(path) + '')
+}
+
+random_hex = function() {
+	return _crypto.randomBytes(64).toString('hex')
 }
