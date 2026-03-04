@@ -38,54 +38,12 @@ app.on('window-all-closed', function() {
 
 // Start the http server
 
-function alert(msg) {
-	this.setHeader('x-alert', msg)
-}
-
-function redirect(url) {
-	this.writeHead(302, {'Location': url})
-	this.end()
-}
-
-// Post body is sent on chunks, so append them
-
-async function parse_request_chunks(res) {
-	let is_form = res.req.headers['content-type'] == 'application/x-www-form-urlencoded'
-	let is_json = res.req.headers['content-type'] == 'application/json'
-	if (is_form || is_json) {
-		let chunks = []
-		for await (let chunk of res.req)
-			chunks.push(chunk)
-		res.req.body = Buffer.concat(chunks).toString()
-		if (is_form)
-			res.post = querystring.parse(res.req.body)
-		else if (is_json) {
-			try {
-				res.post = JSON.parse(res.req.body)
-			} catch (e) {
-				res.alert('JSON invalid')
-			}
-		}
-	}
-}
-
 let http = require('http')
 
 let server = http.createServer(async function (req, res) {
 
 	let file_path = './www' + req.url
 	let ext       = path.extname(file_path)
-
-	socket.on('connection', function(ws) {
-		pr('Connection established.')
-		let session_id = random_hex()
-		socket.active[session_id] = ''
-		ws.send(['session', session_id])
-	})
-
-	socket.on('close', function(ws) {
-		delete socket.active[ws.session_id]
-	})
 
 	if (ext) {
 		fs.readFile(file_path, function(err, content) {
@@ -116,28 +74,55 @@ let server = http.createServer(async function (req, res) {
 	}
 
 	hot_require('./ui_actions.js')
+	hot_require('./socket_actions.js')
 
-	let session_id = random_hex()
-
-	res.req      = req
-	res.alert    = alert
-	res.redirect = redirect
-
-	await parse_request_chunks(res)
+	res.req = req
 
 	try {
-		if (action[req.url])
-			action[req.url](res)
+		if (ui_action[req.url])
+			ui_action[req.url](res)
 		else
-			action['404'](res)		
+			ui_action['404'](res)
 	} catch(e) {
 		pr('error', e)
 	}
 })
 
-let socket = new ws.Server({ server })
+socket = new ws.Server({ server })
 
 socket.active = {}
+
+// Instead of POST in HTTP, all POST calls to the server will happen through the socket.
+// Therefore, the client communicates through this pattern:
+// ws.send([http_method, location, body])
+
+socket.on('connection', function(ws) {
+
+	let ctx = {
+		ws: ws,
+	}
+
+	ctx.alert = function(msg) {
+		this.ws.send('alert', msg)
+	}
+
+	ctx.redirect = function(location) {
+		this.ws.send('redirect', location)
+	}
+
+	ws.on('message', function(client_json) {
+		let o = JSON.parse(client_json)
+		ctx.method = o.method
+		ctx.body   = o.body
+		if (socket_action[o.location])
+			socket_action[o.location](ctx)
+		else
+			ui_action['404'](res)
+	})
+
+})
+
+
 
 server.listen(SERVER_PORT, function() {
 	console.log('Server running.')
