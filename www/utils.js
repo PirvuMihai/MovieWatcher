@@ -5,12 +5,13 @@ let pr = console.error
 let ws = new WebSocket('ws://localhost:8080')
 
 ws.addEventListener('message', function(e) {
-	if (e[0] == 'alert')
-		alert(e[1])
-	if (e[0] == 'redirect')
-		replace(e[1])
+	let server_data = JSON.parse(e.data)
+	if (server_data.type == 'alert')
+		alert(server_data.msg)
+	if (server_data.type == 'redirect')
+		location.replace(server_data.msg)
 })
 
 post = function(body) {
-	ws.send(['POST', location.href, body])
+	ws.send(JSON.stringify({method: 'POST', location: location.pathname, body: body}))
 }

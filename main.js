@@ -7,7 +7,6 @@ mustache    = require('mustache')
 ws          = require('ws')
 
 let SERVER_PORT = 8080
-let SOCKET_PORT = 5555
 
 require('./utils.js')
 
@@ -21,8 +20,8 @@ let window
 
 function create_window() {
 	window = new browser_window({
-		width: 800,
-		height: 600,
+		width: 1200,
+		height: 1200,
 	})
 	window.loadURL('http://localhost:' + SERVER_PORT)
 	window.webContents.openDevTools()
@@ -94,36 +93,39 @@ socket.active = {}
 
 // Instead of POST in HTTP, all POST calls to the server will happen through the socket.
 // Therefore, the client communicates through this pattern:
-// ws.send([http_method, location, body])
+// ws.send({http_method, location, body})
 
 socket.on('connection', function(ws) {
 
-	let ctx = {
-		ws: ws,
+	let ctx = { ws: ws }
+
+	send_data = function(ws, type, msg) {
+		ws.send(JSON.stringify({type: type, msg: msg}))
 	}
 
 	ctx.alert = function(msg) {
-		this.ws.send('alert', msg)
+		send_data(this.ws, 'alert', msg)
 	}
 
 	ctx.redirect = function(location) {
-		this.ws.send('redirect', location)
+		send_data(this.ws, 'redirect', location)
 	}
 
 	ws.on('message', function(client_json) {
-		let o = JSON.parse(client_json)
+		let o = JSON.parse(client_json.toString())
 		ctx.method = o.method
 		ctx.body   = o.body
 		if (socket_action[o.location])
 			socket_action[o.location](ctx)
-		else
-			ui_action['404'](res)
 	})
-
 })
 
 
 
 server.listen(SERVER_PORT, function() {
-	console.log('Server running.')
+	pr('Server running.')
 })
+
+// https://www.quora.com/Are-there-any-good-torrent-APIs-for-listing-torrents
+// cauta comentariu de la assistant AI bot
+// dau in API uri pana mi ies pe cur.

@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" href="main.css">
+	<script src="utils.js"></script>
 	<meta charset="UTF-8">
 	<title>MoviePirate</title>
 </head>
 <body class="center s column">
-	<form class="center fill column" action="/register" method="post">
+	<div class="center fill column">
 		<h1 style="margin-bottom: 2em;">What is your name?</h1>
 		<input 
 			type="text"
-			name="username"
+			id="username"
 			required
 			minlength="2"
 			maxlength="32"
@@ -18,7 +19,13 @@
 			title="2-32 characters. Only numbers and letters are allowed."
 			placeholder="Name: "
 		/>
-		<button class="button" style="margin-top: 10em;">Create account</button>
-	</form>
+		<button class="button" onclick='send_form_data()' style="margin-top: 10em;">Create account</button>
+	</div>
 </body>
+
+<script>
+	async function send_form_data() {
+		post({username: username.value})
+	}
+</script>
 </html>
