@@ -2,13 +2,14 @@
 path        = require('path')
 fs          = require('fs')
 _crypto     = require('crypto')
-querystring = require('querystring')
 mustache    = require('mustache')
 ws          = require('ws')
 
 let SERVER_PORT = 8080
 
 require('./utils.js')
+
+TORRENT_API_URL = ''
 
 if (file_exists('./config.js'))
 	require('./config.js')
@@ -72,6 +73,7 @@ let server = http.createServer(async function (req, res) {
 		res.end(content)
 	}
 
+	hot_require('./movies.js')
 	hot_require('./ui_actions.js')
 	hot_require('./socket_actions.js')
 
@@ -125,6 +127,14 @@ socket.on('connection', function(ws) {
 server.listen(SERVER_PORT, function() {
 	pr('Server running.')
 })
+
+require('./movies.js')
+require('./socket_actions.js')
+
+let ctx = {method: 'POST', body: {movie_name: 'Kraven'}}
+
+socket_action['/search_movie'](ctx)
+return
 
 // https://www.quora.com/Are-there-any-good-torrent-APIs-for-listing-torrents
 // cauta comentariu de la assistant AI bot
