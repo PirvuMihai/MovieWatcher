@@ -129,3 +129,4 @@ server.listen(SERVER_PORT, function() {
 // https://www.quora.com/Are-there-any-good-torrent-APIs-for-listing-torrents
 // cauta comentariu de la assistant AI bot
 // dau in API uri pana mi ies pe cur.
+// NOTE: https://yts.bz/api/v2/list_movies.json?query_term=kraven
