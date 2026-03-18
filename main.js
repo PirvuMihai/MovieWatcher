@@ -9,6 +9,7 @@ let SERVER_PORT = 8080
 
 require('./utils.js')
 
+// NOTE: https://yts.bz/api/v2/list_movies.json?query_term=kraven
 TORRENT_API_URL = ''
 
 if (file_exists('./config.js'))
@@ -135,8 +136,3 @@ let ctx = {method: 'POST', body: {movie_name: 'Kraven'}}
 
 socket_action['/search_movie'](ctx)
 return
-
-// https://www.quora.com/Are-there-any-good-torrent-APIs-for-listing-torrents
-// cauta comentariu de la assistant AI bot
-// dau in API uri pana mi ies pe cur.
-// NOTE: https://yts.bz/api/v2/list_movies.json?query_term=kraven

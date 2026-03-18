@@ -29,3 +29,19 @@ hot_require = function(path) {
 random_hex = function() {
 	return _crypto.randomBytes(64).toString('hex')
 }
+
+main_template = function(vars) {
+	return mustache.render(`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="main.css">
+	<script src="utils.js"></script>
+	<meta charset="UTF-8">
+	<title>MoviePirate</title>
+</head>
+<body class="center s column">
+	{{{content}}}
+</body>
+`, vars)
+}

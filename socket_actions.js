@@ -35,7 +35,7 @@ socket_action['/search_movie'] = async function(ctx) {
 			}
 			a.push(o)
 		}
-		pr(a[0].torrents)
+		pr(a)
 		return a
 	}
 }
