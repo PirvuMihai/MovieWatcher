@@ -16,6 +16,13 @@ TORRENT_API_URL = ''
 if (file_exists('./config.js'))
 	require('./config.js')
 
+let proc = child_process.spawn('tools\\transmission-daemon.exe', ['-f', '--config-dir', 'transmission-config'])
+
+//give the daemon some time to boot
+setTimeout(() => {
+
+}, 2000)
+
 // Start the electron app
 let { app: app, BrowserWindow: browser_window } = require('electron')
 

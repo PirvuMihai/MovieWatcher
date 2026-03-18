@@ -37,7 +37,7 @@ socket_action['/search_movie'] = async function(ctx) {
 		}
 		mkdir('./db/Vasile/Kraven')
 		pr(a[0].torrents[0].url)
-		start_download('Vasile', 'Kraven', a[0].torrents[0].url)
+		start_download('Vasile', 'Kraven', a[0].torrents[0].url, 0, false)
 		return a
 	}
 }

@@ -4,9 +4,19 @@ search_movie = async function(ctx, movie_name) {
 	return data.data.movies
 }
 
-start_download = async function(user, movie_name, link) {
-	let proc = child_process.spawn('./tools/aria2c.exe', [`--dir="./db/${user}/${movie_name}/"`, '--bt-sequential-download=true', '--seed-time=0', link])
-	pr(proc)
+start_download = async function(user, movie_name, link, byte_index, is_partial) {
+	let proc
+	if (!is_partial) {
+		proc = child_process.spawn('./tools/transmission-remote.exe', [
+			'-a',
+			'-w',
+			`${process.cwd()}\\db\\${user}\\${movie_name}\\`,
+			link])
+	} else {
+		// -seq byte_index
+		// -s ? -> start
+	}
+	// pr(proc)
 	proc.stdout.on('data', (data) => {
 		pr('STDOUT')
 		pr(data.toString())
