@@ -1,9 +1,10 @@
 // General config
-path        = require('path')
-fs          = require('fs')
-_crypto     = require('crypto')
-mustache    = require('mustache')
-ws          = require('ws')
+path          = require('path')
+fs            = require('fs')
+_crypto       = require('crypto')
+mustache      = require('mustache')
+ws            = require('ws')
+child_process = require('child_process')
 
 let SERVER_PORT = 8080
 
@@ -135,4 +136,3 @@ require('./socket_actions.js')
 let ctx = {method: 'POST', body: {movie_name: 'Kraven'}}
 
 socket_action['/search_movie'](ctx)
-return
