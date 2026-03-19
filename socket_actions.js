@@ -3,7 +3,7 @@ socket_action = {}
 socket_action['/register'] = async function(ctx) {
 	if (ctx.method == 'POST') {
 		mkdir(`db/${ctx.body.username}`)
-		ctx.redirect('/movies')
+		ctx.redirect('/watch_movie')
 	} else {
 		throw new Error('WTF')
 	}

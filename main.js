@@ -19,9 +19,7 @@ if (file_exists('./config.js'))
 let proc = child_process.spawn('tools\\transmission-daemon.exe', ['-f', '--config-dir', 'transmission-config'])
 
 //give the daemon some time to boot
-setTimeout(() => {
-
-}, 2000)
+sleep(2000)
 
 // Start the electron app
 let { app: app, BrowserWindow: browser_window } = require('electron')
@@ -62,7 +60,8 @@ let server = http.createServer(async function (req, res) {
 					'.js': 'text/javascript',
 					'.png': 'image/png',
 					'.jpg': 'image/jpeg',
-					'.html': 'text/html'
+					'.html': 'text/html',
+					'.mp4': 'video/mp4'
 				}
 
 				res.writeHead(200, {

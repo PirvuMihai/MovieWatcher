@@ -45,3 +45,9 @@ main_template = function(vars) {
 </body>
 `, vars)
 }
+
+sleep = function(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms)
+  })
+}
